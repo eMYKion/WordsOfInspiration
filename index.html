@@ -5,7 +5,8 @@
     <script type="text/javascript"></script>
     <style>
       body{
-        font-family: Arial;
+        font-family: "Lucida Sans Unicode";
+        font-size: 15px;
       }
       #input{
         float:left;
@@ -22,20 +23,26 @@
     <h1>Words of Inspiration</h1>
     <h3>by Mayank Mali</h3>
     <h3>December 13, 2015, 07:24 UTC</h3>
-    <p>This simulation is based on the <u>Words of Inspiration</u> project in an email chain with accounts from Acton Boxborough Regional High School, in which a person is sent an email with two names.</p> 
+    <br>
+    <br>
+    <br>
+    <p>This simulation is based on the <b>Words of Inspiration</b> project paricipated by students from the Acton Boxborough Regional High School, in which a person is sent an email with two names and some instructions.</p> 
     <ol>
       <li>The recipint must first write an inspiring message to the name of the first person</li>
       <li>then he/she must move the second name to the first position and write their own name in the second name's original position</li> 
-      <li>The recipient then must send the modified letter to a specified number of "friends" arbitrarily</li>
-      <li>A student would ideally stop participating in the project after recieving a certain amount of emails.</li>
+      <li>The recipient then must send the modified letter to a specified number of arbitrary "friends" (<u>number of forwards per student</u>).</li>
+      <li>A student would ideally stop sending emails after being annoyed by recieving a certain amount of emails themselves (<u>email intolerance</u>). However, this obviously does not stop them from recieving emails</li>
+      <li>Students also have different levels of cooperation, which would change the number of emails they forward (not implemented yet)</li>
     </ol>
     
-    <p>Given these simple rules, a computer simulation can be run to find the distribution of the number of inspirational messages given to each person.</p>
+    <p>Given these simple rules, a computer simulation can be run to find the distribution of the number of inspirational messages in the original polulation.</p>
     
-    <p>Each position in the resultant list below is representative of a student who's value is the number of messages he/she recieves.</p>
-    
-    <div>
-      
+    <p>Enter in your own parameters below to find a typical distribution of inspirational messages. Are the results surprising?</p>
+    <br>
+    <br>
+    <br>
+    <div style="border-top:1px solid black">
+      <br>
       <div id="input">
         <p>Number of Students: </p><input id="n" type="number" value="2000">
         <p>Number of forwards per student: </p><input id="k" type="number" value="20">
@@ -46,13 +53,15 @@
       </div>
       
       <div id="results">
-        <br>
-        <br>
-        <br>
-        <p style="float:left">frequency of messages</p>
-        <div style="float:left">
+        
+        <div style="float:left;margin-left:200px">
           <canvas id="dist" ></canvas>
           <p>Number of messages</p>
+          
+        </div>
+        <div style="float:left;transform:rotate(90deg);transform-origin: 0% 100%">
+          <p>frequency of messages (students)</p>
+          
         </div>
       </div>
     </div>
