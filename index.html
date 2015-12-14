@@ -133,8 +133,14 @@
       function run(){
         
         
-        
-        f(Math.floor(Math.random()*n), Math.floor(Math.random()*n), Math.floor(Math.random()*n));
+        try{
+          setCanvas();  
+          getInput();
+          f(Math.floor(Math.random()*n), Math.floor(Math.random()*n), Math.floor(Math.random()*n));
+          showDist();
+        }catch(e){
+          ctx.fillText("too much calculation",0,canvas.height/2);
+        }
         console.log(set);
         
         
@@ -143,10 +149,9 @@
       
       
       function Mayank(){
-        setCanvas();  
-        getInput();
+        
         run();
-        showDist();
+        
       }
       
       Mayank();
