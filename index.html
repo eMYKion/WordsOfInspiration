@@ -35,16 +35,16 @@
     <p>Each position in the resultant list below is representative of a student who's value is the number of messages he/she recieves.</p>
     
     <div>
-      <!--
+      
       <div id="input">
-        <p>Number of Students: </p><input type="number" value="20">
-        <p>Number of forwards per student: </p><input type="number" value="20">
-        <p>Email Intolerance: </p><input type="number" value="20">
+        <p>Number of Students: </p><input id="n" type="number" value="2000">
+        <p>Number of forwards per student: </p><input id="k" type="number" value="20">
+        <p>Email Intolerance: </p><input id="intol" type="number" value="3">
         <br>
         <br>
-        <input type="button" value="Run">
+        <input type="button" value="Run" onclick="Mayank()">
       </div>
-      -->
+      
       <div id="results">
         <br>
         <br>
@@ -57,22 +57,24 @@
       </div>
     </div>
     
+    
     <script>
       var canvas;
       var ctx;
+      
       function setCanvas(){
         canvas = document.getElementById("dist");
         ctx  =canvas.getContext("2d");
         canvas.width = 300;
         canvas.height= 300;
       }
-      var n = 2000;
-      var k = 20;
-      var intol = 3;
-      var set = new Array(n);
-      for(var i=0;i<n;i+=1){
-        set[i]=0;
-      }
+      
+      var n;
+      var k;
+      var intol;
+      var set;
+      
+      
       
       function f(c,p,r){
         if(set[r]>intol){
@@ -117,18 +119,37 @@
         
       }
       
+      function getInput(){
+        
+        n = parseInt(document.getElementById("n").value);
+        k = parseInt(document.getElementById("k").value);
+        intol = parseInt(document.getElementById("intol").value);
+        set = new Array(n);
+        for(var i=0;i<n;i+=1){
+          set[i]=0;
+        }
+      }
+      
       function run(){
+        
+        
+        
         f(Math.floor(Math.random()*n), Math.floor(Math.random()*n), Math.floor(Math.random()*n));
         console.log(set);
-        document.write(set);
-        showDist();
+        
+        
       }
       
       
-      setCanvas();
-      showDist();
-      run();
       
+      function Mayank(){
+        setCanvas();  
+        getInput();
+        run();
+        showDist();
+      }
+      
+      Mayank();
       
       
     </script>
