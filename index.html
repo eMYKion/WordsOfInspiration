@@ -4,6 +4,10 @@
     <title>Words of Inspiration</title>
     <script type="text/javascript"></script>
     <style>
+      body{
+        font-family: "Lucida Sans Unicode";
+        font-size: 15px;
+      }
       #input{
         float:left;
       }
@@ -19,51 +23,67 @@
     <h1>Words of Inspiration</h1>
     <h3>by Mayank Mali</h3>
     <h3>December 13, 2015, 07:24 UTC</h3>
-    <p>This simulation is based on the <u>Words of Inspiration</u> project in an email chain with accounts from Acton Boxborough Regional High School, in which a person is sent an email with two names.</p> 
+    <br>
+    <br>
+    <br>
+    <p>This simulation is based on the <b>Words of Inspiration</b> project paricipated by students from the Acton Boxborough Regional High School, in which a person is sent an email with two names and some instructions.</p> 
     <ol>
       <li>The recipint must first write an inspiring message to the name of the first person</li>
       <li>then he/she must move the second name to the first position and write their own name in the second name's original position</li> 
-      <li>The recipient then must send the modified letter to a specified number of "friends" arbitrarily</li>
-      <li>A student would ideally stop participating in the project after recieving a certain amount of emails.</li>
+      <li>The recipient then must send the modified letter to a specified number of arbitrary "friends" (<u>number of forwards per student</u>).</li>
+      <li>A student would ideally stop sending emails after being annoyed by recieving a certain amount of emails themselves (<u>email intolerance</u>). However, this obviously does not stop them from recieving emails</li>
+      <li>Students also have different levels of cooperation, which would change the number of emails they forward (not implemented yet)</li>
     </ol>
     
-    <p>Given these simple rules, a computer simulation can be run to find the distribution of the number of inspirational messages given to each person.</p>
+    <p>Given these simple rules, a computer simulation can be run to find the distribution of the number of inspirational messages in the original polulation.</p>
     
-    <p>Each position in the resultant list below is representative of a student who's value is the number of messages he/she recieves.</p>
-    
-    <div>
-      <!--
+    <p>Enter in your own parameters below to find a typical distribution of inspirational messages. Are the results surprising?</p>
+    <br>
+    <br>
+    <br>
+    <div style="border-top:1px solid black">
+      <br>
       <div id="input">
-        <p>Number of Students: </p><input type="number" value="20">
-        <p>Number of forwards per student: </p><input type="number" value="20">
-        <p>Email Intolerance: </p><input type="number" value="20">
+        <p>Number of Students: </p><input id="n" type="number" value="2000">
+        <p>Number of forwards per student: </p><input id="k" type="number" value="20">
+        <p>Email Intolerance: </p><input id="intol" type="number" value="3">
         <br>
         <br>
-        <input type="button" value="Run">
+        <input type="button" value="Run" onclick="Mayank()">
       </div>
-      -->
+      
       <div id="results">
-        <p></p>
-        <canvas id="dist"></canvas>
+        
+        <div style="float:left;margin-left:200px">
+          <canvas id="dist" ></canvas>
+          <p>Number of messages</p>
+          
+        </div>
+        <div style="float:left;transform:rotate(90deg);transform-origin: 0% 100%">
+          <p>frequency of messages (students)</p>
+          
+        </div>
       </div>
     </div>
+    
     
     <script>
       var canvas;
       var ctx;
+      
       function setCanvas(){
         canvas = document.getElementById("dist");
         ctx  =canvas.getContext("2d");
         canvas.width = 300;
         canvas.height= 300;
       }
-      var n = 2000;
-      var k = 20;
-      var intol = 3;
-      var set = new Array(n);
-      for(var i=0;i<n;i+=1){
-        set[i]=0;
-      }
+      
+      var n;
+      var k;
+      var intol;
+      var set;
+      
+      
       
       function f(c,p,r){
         if(set[r]>intol){
@@ -79,7 +99,7 @@
       
       function showDist(){
         ctx.strokeStyle = "#000000";
-        
+        ctx.font = "10px Arial";
         
         var max = Math.max(...set);//spread operator
         var min = Math.min(...set);
@@ -97,7 +117,9 @@
         for(var i=0;i<max;i+=1){
           var count = set.filter(function(value) { return (value == i) }).length;
           console.log(count);
-          ctx.strokeRect(canvas.width/max*i,canvas.height*(1-(count/totalC)),canvas.width/max,canvas.height*(count/totalC));
+          ctx.strokeRect(canvas.width/max*i,canvas.height*(1-(count/totalC))-10,canvas.width/max,canvas.height*(count/totalC));
+          ctx.fillText(i.toString(),canvas.width/max*(i+0.5),canvas.height);
+          ctx.fillText(count.toString(),canvas.width/max*(i+0.5),canvas.height*(1-(count/totalC))-15);
         }
         
         
@@ -106,18 +128,42 @@
         
       }
       
+      function getInput(){
+        
+        n = parseInt(document.getElementById("n").value);
+        k = parseInt(document.getElementById("k").value);
+        intol = parseInt(document.getElementById("intol").value);
+        set = new Array(n);
+        for(var i=0;i<n;i+=1){
+          set[i]=0;
+        }
+      }
+      
       function run(){
-        f(Math.floor(Math.random()*n), Math.floor(Math.random()*n), Math.floor(Math.random()*n));
+        
+        
+        try{
+          setCanvas();  
+          getInput();
+          f(Math.floor(Math.random()*n), Math.floor(Math.random()*n), Math.floor(Math.random()*n));
+          showDist();
+        }catch(e){
+          ctx.fillText("too much calculation",0,canvas.height/2);
+        }
         console.log(set);
-        document.write(set);
-        showDist();
+        
+        
       }
       
       
-      setCanvas();
-      showDist();
-      run();
       
+      function Mayank(){
+        
+        run();
+        
+      }
+      
+      Mayank();
       
       
     </script>
