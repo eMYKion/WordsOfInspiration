@@ -46,8 +46,14 @@
       </div>
       -->
       <div id="results">
-        <p></p>
-        <canvas id="dist"></canvas>
+        <br>
+        <br>
+        <br>
+        <p style="float:left">frequency of messages</p>
+        <div style="float:left">
+          <canvas id="dist" ></canvas>
+          <p>Number of messages</p>
+        </div>
       </div>
     </div>
     
@@ -82,7 +88,7 @@
       
       function showDist(){
         ctx.strokeStyle = "#000000";
-        
+        ctx.font = "10px Arial";
         
         var max = Math.max(...set);//spread operator
         var min = Math.min(...set);
@@ -100,7 +106,9 @@
         for(var i=0;i<max;i+=1){
           var count = set.filter(function(value) { return (value == i) }).length;
           console.log(count);
-          ctx.strokeRect(canvas.width/max*i,canvas.height*(1-(count/totalC)),canvas.width/max,canvas.height*(count/totalC));
+          ctx.strokeRect(canvas.width/max*i,canvas.height*(1-(count/totalC))-10,canvas.width/max,canvas.height*(count/totalC));
+          ctx.fillText(i.toString(),canvas.width/max*(i+0.5),canvas.height);
+          ctx.fillText(count.toString(),canvas.width/max*(i+0.5),canvas.height*(1-(count/totalC))-15);
         }
         
         
