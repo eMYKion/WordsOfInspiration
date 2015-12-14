@@ -3,27 +3,121 @@
   <head>
     <title>Words of Inspiration</title>
     <script type="text/javascript"></script>
+    <style>
+      #input{
+        float:left;
+      }
+      #results{
+        float: left;
+      }
+      #dist{
+        border: 1px solid black;
+      }
+    </style>
   </head>
   <body>
+    <h1>Words of Inspiration</h1>
+    <h3>by Mayank Mali</h3>
+    <h3>December 13, 2015, 07:24 UTC</h3>
+    <p>This simulation is based on the <u>Words of Inspiration</u> project in an email chain with accounts from Acton Boxborough Regional High School, in which a person is sent an email with two names.</p> 
+    <ol>
+      <li>The recipint must first write an inspiring message to the name of the first person</li>
+      <li>then he/she must move the second name to the first position and write their own name in the second name's original position</li> 
+      <li>The recipient then must send the modified letter to a specified number of "friends" arbitrarily</li>
+      <li>A student would ideally stop participating in the project after recieving a certain amount of emails.</li>
+    </ol>
+    
+    <p>Given these simple rules, a computer simulation can be run to find the distribution of the number of inspirational messages given to each person.</p>
+    
+    <p>Each position in the resultant list below is representative of a student who's value is the number of messages he/she recieves.</p>
+    
+    <div>
+      <!--
+      <div id="input">
+        <p>Number of Students: </p><input type="number" value="20">
+        <p>Number of forwards per student: </p><input type="number" value="20">
+        <p>Email Intolerance: </p><input type="number" value="20">
+        <br>
+        <br>
+        <input type="button" value="Run">
+      </div>
+      -->
+      <div id="results">
+        <p></p>
+        <canvas id="dist"></canvas>
+      </div>
+    </div>
+    
     <script>
-      var n = 20;
-      var k = 5;
-      var intol = 3
+      var canvas;
+      var ctx;
+      function setCanvas(){
+        canvas = document.getElementById("dist");
+        ctx  =canvas.getContext("2d");
+        canvas.width = 300;
+        canvas.height= 300;
+      }
+      var n = 2000;
+      var k = 20;
+      var intol = 3;
       var set = new Array(n);
       for(var i=0;i<n;i+=1){
         set[i]=0;
       }
       
       function f(c,p,r){
-        if(set[r]>3){
+        if(set[r]>intol){
           return 0
         }
         set[c]+=1;
         for(var i=0;i<k;i+=1){
-          rand = Math.floor(Math.random()*20);
+          rand = Math.floor(Math.random()*n);
           f(p,r,rand);
+          
         }
       }
+      
+      function showDist(){
+        ctx.strokeStyle = "#000000";
+        
+        
+        var max = Math.max(...set);//spread operator
+        var min = Math.min(...set);
+        
+        
+        
+        var totalC=0;
+        
+        
+        for(var i=0;i<max;i+=1){
+          totalC+= set.filter(function(value) { return (value == i) }).length;
+        }
+          
+        
+        for(var i=0;i<max;i+=1){
+          var count = set.filter(function(value) { return (value == i) }).length;
+          console.log(count);
+          ctx.strokeRect(canvas.width/max*i,canvas.height*(1-(count/totalC)),canvas.width/max,canvas.height*(count/totalC));
+        }
+        
+        
+        
+        
+        
+      }
+      
+      function run(){
+        f(Math.floor(Math.random()*n), Math.floor(Math.random()*n), Math.floor(Math.random()*n));
+        console.log(set);
+        document.write(set);
+        showDist();
+      }
+      
+      
+      setCanvas();
+      showDist();
+      run();
+      
       
       
     </script>
